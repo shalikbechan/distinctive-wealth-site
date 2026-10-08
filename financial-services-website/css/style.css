@@ -398,7 +398,9 @@ section { position: relative; }
 }
 .mobile-nav .btn { margin-top: 28px; }
 
-body.nav-locked { overflow: hidden; }
+html.nav-locked, body.nav-locked { overflow: hidden; }
+body.nav-locked { position: fixed; left: 0; right: 0; width: 100%; }
+body.nav-locked .site-header { position: fixed; top: 0; left: 0; right: 0; }
 
 /* ---------- Hero ---------- */
 .hero {
@@ -670,7 +672,7 @@ body.nav-locked { overflow: hidden; }
 .detail-grid h2 { margin-bottom: 22px; }
 .detail-grid p.lead { font-size: 1.05rem; margin-bottom: 20px; }
 
-.feature-list { display: flex; flex-direction: column; gap: 0; }
+.feature-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }
 .feature-list li {
   display: flex;
   align-items: flex-start;
@@ -726,7 +728,7 @@ body.nav-locked { overflow: hidden; }
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.category-block ul { display: flex; flex-direction: column; gap: 10px; }
+.category-block ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .category-block li {
   padding-left: 22px;
   position: relative;
@@ -794,7 +796,7 @@ body.nav-locked { overflow: hidden; }
   font-weight: 700;
   margin-bottom: 22px;
 }
-.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .footer-col a, .footer-col span, .footer-col p {
   color: rgba(255,255,255,0.65);
   font-size: 0.92rem;
@@ -955,4 +957,100 @@ body.nav-locked { overflow: hidden; }
   .services-heading { flex-direction: column; align-items: flex-start; }
   .cta-band { padding: 72px 0; }
   h1 { line-height: 1.2; }
+}
+
+/* ==========================================================================
+   Mobile refinements (phones such as iPhone 13 / SE)
+   ========================================================================== */
+
+/* Mobile menu: fills the screen under the header, scrolls on its own */
+.mobile-nav {
+  height: calc(100vh - var(--header-height));
+  height: calc(100dvh - var(--header-height));
+  bottom: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-nav-inner { padding: 24px 20px 40px; }
+.mobile-nav a { font-size: 1.35rem; padding: 14px 0; }
+.mobile-nav .btn {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--deep-forest);
+  white-space: normal;
+  text-align: center;
+  margin-top: 24px;
+}
+.mobile-nav .btn-primary { color: var(--white); }
+body.nav-locked .site-header { background: var(--white); }
+
+/* Prevent iPhone zooming in when a form field is tapped */
+.form-group input, .form-group select, .form-group textarea { font-size: 16px; }
+
+@media (max-width: 680px) {
+  :root { --header-height: 72px; }
+  .brand img { height: 40px; }
+
+  h1 { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+  h2 { font-size: clamp(1.6rem, 7vw, 2rem); }
+  h3 { font-size: 1.3rem; }
+  p.lead { font-size: 1.05rem; }
+  .eyebrow { letter-spacing: 0.14em; font-size: 0.72rem; gap: 10px; }
+  .eyebrow::before { width: 20px; }
+
+  .section { padding: 64px 0; }
+  .section-sm { padding: 48px 0; }
+  .section-tight { padding: 56px 0; }
+
+  .hero { padding: 64px 0 56px; }
+  .hero .eyebrow { margin-bottom: 20px; }
+  .hero h1 { margin-bottom: 20px; }
+  .hero p.lead { margin-bottom: 32px; }
+  .hero-actions { gap: 8px; }
+  .hero-actions .btn-ghost { align-self: flex-start; }
+  .hero-stat-row { margin-top: 48px; padding-top: 28px; gap: 24px; }
+
+  .page-hero { padding: 56px 0 48px; }
+  .page-hero-crumb { margin-bottom: 18px; flex-wrap: wrap; }
+
+  .intro-grid, .grid-2, .detail-grid, .contact-layout { gap: 32px; }
+  .services-heading { margin-bottom: 36px; gap: 20px; }
+
+  .service-card { padding: 28px 24px; min-height: 0; }
+  .service-card .card-num { margin-bottom: 14px; }
+  .partner-card { padding: 36px 24px; gap: 18px; }
+  .partner-logo-box { height: 72px; }
+  .partner-logo-box img { max-height: 72px; }
+
+  .value-card { padding: 32px 24px; }
+  .panel-box { padding: 28px 22px; }
+  .detail-block { padding: 56px 0; }
+  .category-block { margin-bottom: 32px; }
+  .category-block h3 { font-size: 1.15rem; }
+
+  .partner-page-logo { height: 72px; padding: 14px 20px; }
+  .partner-page-logo img { max-height: 44px; max-width: 180px; }
+
+  .regulatory-panel { gap: 20px; }
+  .regulatory-logo-box { height: 72px; }
+  .regulatory-logo-box img { max-height: 72px; }
+
+  .contact-info-card { padding: 32px 24px; }
+  .cta-band { padding: 56px 0; }
+  .cta-band h2 { margin-bottom: 24px; }
+  .cta-band .btn { white-space: normal; text-align: center; }
+
+  .site-footer { padding-top: 56px; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-brand img { height: 64px; }
+  .footer-col a, .footer-col span, .footer-col p { overflow-wrap: anywhere; }
+  .footer-legal, .footer-bottom { padding: 24px 0; }
+  .success-block { padding: 72px 0; }
+}
+
+@media (max-width: 380px) {
+  .container, .nav-wrap { padding: 0 16px; }
+  h1 { font-size: 2rem; }
+  .footer-top { grid-template-columns: 1fr; }
 }

@@ -25,14 +25,32 @@
   var mobileNav = document.querySelector(".mobile-nav");
 
   if (navToggle && mobileNav) {
+    // Lock the page behind the menu. iPhone Safari ignores overflow:hidden
+    // on <body>, so the body is pinned in place and the scroll position restored.
+    var lockedScrollY = 0;
+    var isOpen = false;
     var closeNav = function () {
+      if (!isOpen) return;
+      isOpen = false;
       navToggle.setAttribute("aria-expanded", "false");
       mobileNav.classList.remove("is-open");
+      document.documentElement.classList.remove("nav-locked");
       document.body.classList.remove("nav-locked");
+      document.body.style.top = "";
+      try {
+        window.scrollTo({ top: lockedScrollY, left: 0, behavior: "instant" });
+      } catch (err) {
+        window.scrollTo(0, lockedScrollY);
+      }
     };
     var openNav = function () {
+      if (isOpen) return;
+      isOpen = true;
+      lockedScrollY = window.scrollY || window.pageYOffset;
       navToggle.setAttribute("aria-expanded", "true");
       mobileNav.classList.add("is-open");
+      document.body.style.top = -lockedScrollY + "px";
+      document.documentElement.classList.add("nav-locked");
       document.body.classList.add("nav-locked");
     };
 
